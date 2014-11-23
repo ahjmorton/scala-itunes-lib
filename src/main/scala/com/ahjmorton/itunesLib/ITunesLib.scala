@@ -15,6 +15,12 @@ object ITunesLib {
 
 class ITunesLib(root:Dict) {
     
-    
+    private lazy val tracks = root.getDict("Tracks")
 
+    def all = throw new UnsupportedOperationException("Not implemented yet")
+    def music = throw new UnsupportedOperationException("Not implemented yet")
+    def podcasts = throw new UnsupportedOperationException("Not implemented yet")
+    def tvShows = throw new UnsupportedOperationException("Not implemented yet")
+    def movies = throw new UnsupportedOperationException("Not implemented yet")
+    def audioBooks = throw new UnsupportedOperationException("Not implemented yet")
 }
