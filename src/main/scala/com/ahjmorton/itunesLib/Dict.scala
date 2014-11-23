@@ -9,10 +9,11 @@ class Dict(xml:Node) {
     }.toMap
 
     private def findAndConvert[T >: Null](key:String, conv:(Node => T)) : T = {
-        if(index contains key) 
+        if(index contains key) {
             conv(index(key)) 
-        else
+        } else {
             null
+        }
     }
 
     def getString = findAndConvert(_:String, (node) => node.text)
@@ -29,5 +30,9 @@ class Dict(xml:Node) {
 
     def getDict = findAndConvert(_:String, (node) => new Dict(node)) 
 
-    def getArrayOfDicts = findAndConvert(_:String, (node) => (node \ "_").map(new Dict(_)))
+    def getArrayOfDicts = findAndConvert(_:String, 
+         (node) => {
+             (node \ "_").map(new Dict(_))
+         }
+    )
 }
