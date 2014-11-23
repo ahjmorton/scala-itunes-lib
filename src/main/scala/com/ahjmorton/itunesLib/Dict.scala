@@ -2,7 +2,7 @@ package com.ahjmorton.itunesLib
 
 import scala.xml.Node
 
-class ITunesDict(xml:Node) {
+class Dict(xml:Node) {
 
     private val index = (xml \ "_").grouped(2).map {
         case Seq(keyNode, elementNode) => (keyNode.text, elementNode)
@@ -27,7 +27,7 @@ class ITunesDict(xml:Node) {
          case _ => false
     }
 
-    def getDict = findAndConvert(_:String, (node) => new ITunesDict(node)) 
+    def getDict = findAndConvert(_:String, (node) => new Dict(node)) 
 
-    def getArrayOfDicts = findAndConvert(_:String, (node) => (node \ "_").map(new ITunesDict(_)))
+    def getArrayOfDicts = findAndConvert(_:String, (node) => (node \ "_").map(new Dict(_)))
 }
