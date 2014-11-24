@@ -10,7 +10,13 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
     info("I want to be able to get a high level of an iTunes library XML file")
     info("So I can analyse it for other purposes")
 
-    def loadXml = XML.loadFile("/Users/ahjmorton/Music/iTunes/iTunes Music Library.xml") 
+    val loadXml = XML.loadFile("/Users/ahjmorton/Music/iTunes/iTunes Music Library.xml") 
+
+    val xml = 
+    <plist>
+        <dict>
+        </dict>
+    </plist>
 
     feature("Loading XML File") {
          scenario("User loads an XML file from the file system") {
@@ -22,6 +28,18 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
 
              Then("The lib should be a Scala object")
              assert(lib != null)
+         }
+         scenario("User is able to load music files") {
+             Given("A user has access to iTunes XML")
+             val itunesXml = loadXml
+
+             When("A user wants investigate their music")
+             val lib = ITunesLib.create(itunesXml)
+             val music = lib.music
+ 
+             Then("There should be at least one entry")
+             assert(music.size > 0)
+             And("It should contain the music from the users library")
          }
     }
 

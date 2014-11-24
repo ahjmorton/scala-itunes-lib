@@ -6,11 +6,11 @@ import scala.xml.Elem
 
 object ITunesLib {
 
-    def fromFile(path:String) = newLib(XML.loadFile(path))
+    def fromFile(path:String):ITunesLib = newLib(XML.loadFile(path))
 
-    def create(xmlNode:Elem) = newLib(xmlNode)
+    def create(xmlNode:Elem):ITunesLib = newLib(xmlNode)
 
-    private def newLib(node:Node) = new ITunesLib(new Dict(sanityCheck(node)))
+    private def newLib(node:Node) = new DictITunesLib(new Dict(sanityCheck(node)))
         
     private def sanityCheck(node:Node) = {
         if(node.label == "dict") {
@@ -22,16 +22,36 @@ object ITunesLib {
         }
     }
 
-}
+    trait ITunesLib {
+        def all:Iterable[Track]
+        def music:Iterable[Music]
+        def podcasts:Iterable[Podcast]
+        def tvShows:Iterable[TVShow]
+        def movies:Iterable[Movie]
+        def audioBooks:Iterable[Audiobook]
+    }
 
-class ITunesLib(root:Dict) {
-    
-    private lazy val tracks = root.getDict("Tracks")
+    class DictITunesLib(root:Dict) extends ITunesLib {
+     
+        def all = throw new UnsupportedOperationException("Not implemented yet")
+        def music = playlist("Music").map((id) => new Music(tracks.getDict(id)))
+        def podcasts = throw new UnsupportedOperationException("Not implemented yet")
+        def tvShows = throw new UnsupportedOperationException("Not implemented yet")
+        def movies = throw new UnsupportedOperationException("Not implemented yet")
+        def audioBooks = throw new UnsupportedOperationException("Not implemented yet")
 
-    def all = throw new UnsupportedOperationException("Not implemented yet")
-    def music = throw new UnsupportedOperationException("Not implemented yet")
-    def podcasts = throw new UnsupportedOperationException("Not implemented yet")
-    def tvShows = throw new UnsupportedOperationException("Not implemented yet")
-    def movies = throw new UnsupportedOperationException("Not implemented yet")
-    def audioBooks = throw new UnsupportedOperationException("Not implemented yet")
+        private val tracks = root.getDict("Tracks")
+
+        private def playlist(name:String):Iterable[String] = {
+            val playlist = 
+                 root.getArrayOfDicts("Playlists")
+                     .find((dict:Dict) => dict.getString("Name") == name) match {
+                         case Some(playlist) => playlist 
+                         case None => throw new IllegalArgumentException("Cannot find playlist with name " + name)
+                     }
+            playlist.getArrayOfDicts("Playlist Items").map(_.getInt("Track ID").toString)
+        }
+
+    }
+
 }
