@@ -6,11 +6,22 @@ import scala.xml.Elem
 
 object ITunesLib {
 
-    private def newLib(node:Node) = new ITunesLib(new Dict(node))
-
     def fromFile(path:String) = newLib(XML.loadFile(path))
 
     def create(xmlNode:Elem) = newLib(xmlNode)
+
+    private def newLib(node:Node) = new ITunesLib(new Dict(sanityCheck(node)))
+        
+    private def sanityCheck(node:Node) = {
+        if(node.label == "dict") {
+            node
+        } else if (node.label == "plist" && node.child(0).label == "dict") {
+            node.child(0)
+        } else {
+            throw new IllegalArgumentException("Unknown XML submited for generating ITunesLib :" + node)
+        }
+    }
+
 }
 
 class ITunesLib(root:Dict) {
