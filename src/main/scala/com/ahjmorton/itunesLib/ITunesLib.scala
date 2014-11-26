@@ -36,13 +36,15 @@ object ITunesLib {
     class DictITunesLib(root:Dict) extends ITunesLib {
      
         def all = throw new UnsupportedOperationException("Not implemented yet")
-        def music = playlist("Music").map((id) => new Music(tracks.getDict(id)))
-        def podcasts = throw new UnsupportedOperationException("Not implemented yet")
+        def music = playlistDicts("Music").map(new Music(_))
+        def podcasts = playlistDicts("Podcasts").map(new Podcast(_))
         def tvShows = throw new UnsupportedOperationException("Not implemented yet")
-        def movies = playlist("Movies").map((id) => new Movie(tracks.getDict(id)))
-        def audioBooks = playlist("Audiobooks").map((id) => new Audiobook(tracks.getDict(id)))
+        def movies = playlistDicts("Movies").map(new Movie(_))
+        def audioBooks = playlistDicts("Audiobooks").map(new Audiobook(_))
 
         private val tracks = root.getDict("Tracks")
+
+        private def playlistDicts(name:String) = playlist(name).map(tracks.getDict(_))
 
         private def playlist(name:String):Iterable[String] = {
             val playlist = 
@@ -53,6 +55,7 @@ object ITunesLib {
                      }
             playlist.getArrayOfDicts("Playlist Items").map(_.getInt("Track ID").toString)
         }
+       
 
     }
 

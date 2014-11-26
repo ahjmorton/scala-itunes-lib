@@ -27,6 +27,10 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
                 <dict>
                     <key>Track ID</key><integer>3</integer>
                 </dict>
+                <key>4</key>
+                <dict>
+                    <key>Track ID</key><integer>4</integer>
+                </dict>
             </dict>
             <key>Playlists</key>
             <array>
@@ -54,6 +58,15 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
                     <array>
                         <dict>
                             <key>Track ID</key><integer>3</integer>
+                        </dict>
+                    </array>
+                </dict>
+                <dict>
+                    <key>Name</key><string>Podcasts</string>
+                    <key>Playlist Items</key>
+                    <array>
+                        <dict>
+                            <key>Track ID</key><integer>4</integer>
                         </dict>
                     </array>
                 </dict>
@@ -104,6 +117,17 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
  
              Then("There should be at least one entry")
              assert(movies.size > 0)
+         }
+         scenario("User is able to load podcast files") {
+             Given("A user has access to iTunes XML")
+             val itunesXml = xml
+
+             When("A user wants investigate their podcasts")
+             val lib = ITunesLib.create(itunesXml)
+             val podcasts = lib.podcasts
+ 
+             Then("There should be at least one entry")
+             assert(podcasts.size > 0)
          }
     }
 
