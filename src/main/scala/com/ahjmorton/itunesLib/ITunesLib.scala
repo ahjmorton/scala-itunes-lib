@@ -25,7 +25,6 @@ object ITunesLib {
     }
 
     trait ITunesLib {
-        def all:Iterable[Track]
         def music:Iterable[Music]
         def podcasts:Iterable[Podcast]
         def tvShows:Iterable[TVShow]
@@ -35,7 +34,6 @@ object ITunesLib {
 
     class DictITunesLib(root:Dict) extends ITunesLib {
      
-        def all = throw new UnsupportedOperationException("Not implemented yet")
         def music = playlistDicts("Music").map(new Music(_))
         def podcasts = playlistDicts("Podcasts").map(new Podcast(_))
         def tvShows = playlistDicts("TV Shows").map(new TVShow(_))

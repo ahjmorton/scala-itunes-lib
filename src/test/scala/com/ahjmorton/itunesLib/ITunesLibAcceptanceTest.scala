@@ -35,7 +35,6 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
                 <dict>
                     <key>Track ID</key><integer>5</integer>
                 </dict>
-
             </dict>
             <key>Playlists</key>
             <array>
@@ -155,5 +154,4 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
              assert(tvShows.size == 1)
          }
     }
-
 }
