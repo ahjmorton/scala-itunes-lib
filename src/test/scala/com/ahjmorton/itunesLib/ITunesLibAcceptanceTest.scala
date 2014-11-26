@@ -108,7 +108,7 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
              val music = lib.music
  
              Then("There should be at least one entry")
-             assert(music.size > 0)
+             assert(music.size == 1)
          }
          scenario("User is able to load audiobook files") {
              Given("A user has access to iTunes XML")
@@ -119,7 +119,7 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
              val audioBooks = lib.audioBooks
  
              Then("There should be at least one entry")
-             assert(audioBooks.size > 0)
+             assert(audioBooks.size == 1)
          }
          scenario("User is able to load movie files") {
              Given("A user has access to iTunes XML")
@@ -130,7 +130,7 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
              val movies = lib.movies
  
              Then("There should be at least one entry")
-             assert(movies.size > 0)
+             assert(movies.size == 1)
          }
          scenario("User is able to load podcast files") {
              Given("A user has access to iTunes XML")
@@ -141,7 +141,7 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
              val podcasts = lib.podcasts
  
              Then("There should be at least one entry")
-             assert(podcasts.size > 0)
+             assert(podcasts.size == 1)
          }
          scenario("User is able to load tvShow files") {
              Given("A user has access to iTunes XML")
@@ -152,7 +152,7 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
              val tvShows = lib.tvShows
  
              Then("There should be at least one entry")
-             assert(tvShows.size > 0)
+             assert(tvShows.size == 1)
          }
     }
 
