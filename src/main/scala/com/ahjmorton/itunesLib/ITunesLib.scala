@@ -30,6 +30,7 @@ object ITunesLib {
         def tvShows:Iterable[TVShow]
         def movies:Iterable[Movie]
         def audioBooks:Iterable[Audiobook]
+        def itunesU:Iterable[ITunesU]
     }
 
     class DictITunesLib(root:Dict) extends ITunesLib {
@@ -39,6 +40,7 @@ object ITunesLib {
         def tvShows = playlistDicts("TV Shows").map(new TVShow(_))
         def movies = playlistDicts("Movies").map(new Movie(_))
         def audioBooks = playlistDicts("Audiobooks").map(new Audiobook(_))
+        def itunesU = playlistDicts("iTunes U").map(new ITunesU(_))
 
         private val tracks = root.getDict("Tracks")
 
