@@ -40,7 +40,7 @@ object ITunesLib {
         def podcasts = throw new UnsupportedOperationException("Not implemented yet")
         def tvShows = throw new UnsupportedOperationException("Not implemented yet")
         def movies = throw new UnsupportedOperationException("Not implemented yet")
-        def audioBooks = throw new UnsupportedOperationException("Not implemented yet")
+        def audioBooks = playlist("Audiobooks").map((id) => new Audiobook(tracks.getDict(id)))
 
         private val tracks = root.getDict("Tracks")
 
