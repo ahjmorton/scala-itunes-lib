@@ -3,6 +3,7 @@ package com.ahjmorton.itunesLib
 import scala.xml.XML
 import scala.xml.Node
 import scala.xml.Elem
+import scala.xml.Utility
 
 object ITunesLib {
 
@@ -12,7 +13,8 @@ object ITunesLib {
 
     private def newLib(node:Node) = new DictITunesLib(new Dict(sanityCheck(node)))
         
-    private def sanityCheck(node:Node) = {
+    private def sanityCheck(rawNode:Node) = {
+        val node = Utility.trim(rawNode)
         if(node.label == "dict") {
             node
         } else if (node.label == "plist" && node.child(0).label == "dict") {
