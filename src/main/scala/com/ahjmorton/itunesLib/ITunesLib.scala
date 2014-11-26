@@ -38,7 +38,7 @@ object ITunesLib {
         def all = throw new UnsupportedOperationException("Not implemented yet")
         def music = playlistDicts("Music").map(new Music(_))
         def podcasts = playlistDicts("Podcasts").map(new Podcast(_))
-        def tvShows = throw new UnsupportedOperationException("Not implemented yet")
+        def tvShows = playlistDicts("TV Shows").map(new TVShow(_))
         def movies = playlistDicts("Movies").map(new Movie(_))
         def audioBooks = playlistDicts("Audiobooks").map(new Audiobook(_))
 
