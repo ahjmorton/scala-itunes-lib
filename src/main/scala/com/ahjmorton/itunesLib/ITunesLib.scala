@@ -42,20 +42,25 @@ object ITunesLib {
         def audioBooks = playlistDicts("Audiobooks").map(new Audiobook(_))
         def itunesU = playlistDicts("iTunes U").map(new ITunesU(_))
 
-        private val tracks = root.getDict("Tracks")
+        private val tracks = root.getDict("Tracks").get
+        private val playlists = root.getArrayOfDicts("Playlists").get
 
-        private def playlistDicts(name:String) = playlist(name).map(tracks.getDict(_))
+        private def playlistDicts(name:String) = {
+             playlist(name).map((trackId) => tracks.getDict(trackId) match {
+                 case Some(dict) => dict
+                 case None => throw new IllegalStateException("Track ID " + trackId + " specified in playlist but cannot find in list of tracks")
+             })
+        }
 
         private def playlist(name:String):Iterable[String] = {
             val playlist = 
-                 root.getArrayOfDicts("Playlists")
-                     .find((dict:Dict) => dict.getString("Name") == name) match {
-                         case Some(playlist) => playlist 
-                         case None => throw new IllegalArgumentException("Cannot find playlist with name " + name)
-                     }
-            playlist.getArrayOfDicts("Playlist Items").map(_.getInt("Track ID").toString)
+              playlists.find((dict:Dict) => dict.getString("Name").get == name) match {
+                case Some(playlist) => playlist 
+                case None => throw new IllegalArgumentException("Cannot find playlist with name " + name)
+              }
+            playlist.getArrayOfDicts("Playlist Items").get
+              .map(_.getInt("Track ID").get.toString)
         }
-       
 
     }
 

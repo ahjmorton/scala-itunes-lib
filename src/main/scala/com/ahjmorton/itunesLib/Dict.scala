@@ -8,25 +8,19 @@ class Dict(xml:Node) {
         case Seq(keyNode, elementNode) => (keyNode.text, elementNode)
     }.toMap
 
-    private def findAndConvert[T >: Null](key:String, conv:(Node => T)) : T = {
+    private def findAndConvert[T](key:String, conv:(Node => T)) : Option[T] = {
         if(index contains key) {
-            conv(index(key)) 
+            Some(conv(index(key)))        
         } else {
-            null
+            None
         }
     }
 
     def getString = findAndConvert(_:String, (node) => node.text)
 
-    def getInt = findAndConvert(_:String, (node) => node.text.toInt) match { 
-        case a:Int => a;
-        case _ => 0
-    }
+    def getInt = findAndConvert(_:String, (node) => node.text.toInt)
 
-    def getBoolean = findAndConvert(_:String, (node) => node.label == "true") match { 
-         case a:Boolean => a 
-         case _ => false
-    }
+    def getBoolean = findAndConvert(_:String, (node) => node.label == "true")
 
     def getDict = findAndConvert(_:String, (node) => new Dict(node)) 
 
