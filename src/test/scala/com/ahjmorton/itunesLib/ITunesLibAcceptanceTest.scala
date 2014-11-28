@@ -1,6 +1,8 @@
 package com.ahjmorton.itunesLib
 
 import scala.xml.XML
+import scala.io.Source
+
 
 import org.scalatest._
 
@@ -10,98 +12,14 @@ class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {
     info("I want to be able to get a high level of an iTunes library XML file")
     info("So I can analyse it for other purposes")
 
-    val xml = 
-    <plist>
-        <dict>
-            <key>Tracks</key>
-            <dict>
-                <key>1</key>
-                <dict>
-                    <key>Track ID</key><integer>1</integer>
-                </dict>
-                <key>2</key>
-                <dict>
-                    <key>Track ID</key><integer>2</integer>
-                </dict>
-                <key>3</key>
-                <dict>
-                    <key>Track ID</key><integer>3</integer>
-                </dict>
-                <key>4</key>
-                <dict>
-                    <key>Track ID</key><integer>4</integer>
-                </dict>
-                <key>5</key>
-                <dict>
-                    <key>Track ID</key><integer>5</integer>
-                </dict>
-                <key>6</key>
-                <dict>
-                    <key>Track ID</key><integer>6</integer>
-                </dict>
-            </dict>
-            <key>Playlists</key>
-            <array>
-                <dict>
-                    <key>Name</key><string>Music</string>
-                    <key>Playlist Items</key>
-                    <array>
-                        <dict>
-                            <key>Track ID</key><integer>1</integer>
-                        </dict>
-                    </array>
-                </dict>
-                <dict>
-                    <key>Name</key><string>Audiobooks</string>
-                    <key>Playlist Items</key>
-                    <array>
-                        <dict>
-                            <key>Track ID</key><integer>2</integer>
-                        </dict>
-                    </array>
-                </dict>
-                <dict>
-                    <key>Name</key><string>Movies</string>
-                    <key>Playlist Items</key>
-                    <array>
-                        <dict>
-                            <key>Track ID</key><integer>3</integer>
-                        </dict>
-                    </array>
-                </dict>
-                <dict>
-                    <key>Name</key><string>Podcasts</string>
-                    <key>Playlist Items</key>
-                    <array>
-                        <dict>
-                            <key>Track ID</key><integer>4</integer>
-                        </dict>
-                    </array>
-                </dict>
-                <dict>
-                    <key>Name</key><string>TV Shows</string>
-                    <key>Playlist Items</key>
-                    <array>
-                        <dict>
-                            <key>Track ID</key><integer>5</integer>
-                        </dict>
-                    </array>
-                </dict>
-                <dict>
-                    <key>Name</key><string>iTunes U</string>
-                    <key>Playlist Items</key>
-                    <array>
-                        <dict>
-                            <key>Track ID</key><integer>6</integer>
-                        </dict>
-                    </array>
-                </dict>
-            </array>
-        </dict>
-    </plist>
-
+    val xml = {
+        val xmlSource = Source.fromURL(getClass.getResource("/sample-itunes.xml"))
+        XML.loadString(xmlSource.mkString)
+    
+    } 
+        
     feature("Loading XML File") {
-         scenario("User loads an XML file from the file system") {
+        scenario("User loads an XML file from the file system") {
              Given("A user has access to iTunes XML")
              val itunesXML = xml
      
