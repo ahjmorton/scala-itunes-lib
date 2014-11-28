@@ -1,5 +1,7 @@
 package com.ahjmorton.itunesLib
 
+import org.joda.time.DateTime
+
 import org.scalatest._
 
 class DictTest extends FlatSpec with Matchers {
@@ -20,6 +22,13 @@ class DictTest extends FlatSpec with Matchers {
          val xml = <dict><key>Key</key><true /></dict>
          val dict = new Dict(xml)
          dict.getBoolean("Key").get should be (true)
+     }
+
+     it should "be able to extract a date" in {
+         val expectedDate = DateTime.parse("2014-08-27T01:00:00Z")
+         val xml = <dict><key>Key</key><date>2014-08-27T01:00:00Z</date></dict>
+         val dict = new Dict(xml)
+         dict.getDateTime("Key").get should be (expectedDate)
      }
 
      it should "be able to extract another dictionary" in {

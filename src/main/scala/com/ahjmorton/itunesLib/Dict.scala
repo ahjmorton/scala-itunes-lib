@@ -2,6 +2,8 @@ package com.ahjmorton.itunesLib
 
 import scala.xml.Node
 
+import org.joda.time.DateTime
+
 class Dict(xml:Node) {
 
     private val index = (xml \ "_").grouped(2).map {
@@ -23,6 +25,8 @@ class Dict(xml:Node) {
     def getBoolean = findAndConvert(_:String, (node) => node.label == "true")
 
     def getDict = findAndConvert(_:String, (node) => new Dict(node)) 
+
+    def getDateTime = findAndConvert(_:String, (node) => DateTime.parse(node.text))
 
     def getArrayOfDicts = findAndConvert(_:String, 
          (node) => {
