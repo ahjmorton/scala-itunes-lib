@@ -26,10 +26,10 @@ trait TrackLike extends DictTrack{
      def isUnplayed:Boolean = boolDefaultFalse("Unplayed")
 
      def releaseDate:Option[DateTime] = root.getDateTime("Release Date")
-
      def size:Option[Int] = root.getInt("Size")
-
      def kind:Option[String] = root.getString("Kind")
+     def totalTime:Option[Int] = root.getInt("Total Time")
+     def year:Option[Int] = root.getInt("Year")
 }
 
 trait AudioLike extends DictTrack {
@@ -59,7 +59,6 @@ trait MayHaveTrackInfo extends DictTrack {
      def diskCount:Option[Int] = root.getInt("Disk Count")
      def trackNumber:Option[Int] = root.getInt("Track Number")
      def trackCount:Option[Int] = root.getInt("Track Count")
-     def year:Option[Int] = root.getInt("Year")
 }
 
 abstract class Track(dict:Dict) extends TrackLike {

@@ -44,6 +44,9 @@ class MusicFileTest extends FlatSpec with Matchers {
           music.size.isDefined should be (true)
           music.size.get should be (31350039)
 
+          music.totalTime.isDefined should be (true)
+          music.totalTime.get should be (229176)
+
           music.kind.isDefined should be (true)
           music.kind.get should be ("Apple Lossless audio file")
 
@@ -98,6 +101,9 @@ class PodcastFileTest extends FlatSpec with Matchers {
           val audioPodcast = new Podcast(new Dict(audioPodcastXML))
           audioPodcast.hasVideo should be (false)
 
+          audioPodcast.totalTime.isDefined should be (true)
+          audioPodcast.totalTime.get should be (8091794)
+          
           audioPodcast.isUnplayed should be (true)
           audioPodcast.isExplicit should be (true)
           audioPodcast.bitRate should be (96)
