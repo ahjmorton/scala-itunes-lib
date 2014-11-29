@@ -4,9 +4,9 @@ import org.joda.time.DateTime
 
 import org.scalatest._
 
-class MusicFileTest extends FlatSpec with Matchers {
+class TrackFileTypeTest extends FlatSpec with Matchers {
 
-      val xml = 
+      val musicXML = 
           <dict>
               <key>Track ID</key><integer>1</integer>
               <key>Name</key><string>Never Give Up</string>
@@ -36,7 +36,7 @@ class MusicFileTest extends FlatSpec with Matchers {
   
 
       "Music files" should "allow access to correct fields" in {
-          val music = new Music(new Dict(xml))
+          val music = new Music(new Dict(musicXML))
           music.name should be ("Never Give Up")
           music.artist should be ("Error404")
           music.album should be ("Beta EP")
@@ -64,11 +64,112 @@ class MusicFileTest extends FlatSpec with Matchers {
 
           music.year.isDefined should be (true)
           music.year.get should be (2012)
-      }
-}
+     }
 
-class PodcastFileTest extends FlatSpec with Matchers {
-     
+    val audioBookXML = 
+    <dict>
+        <key>Name</key><string>Mogworld (Unabridged) Part 1</string>
+        <key>Artist</key><string>Yahtzee Croshaw</string>
+        <key>Album Artist</key><string>Yahtzee Croshaw</string>
+        <key>Album</key><string>Mogworld (Unabridged)</string>
+        <key>Genre</key><string>Sci Fi &#38; Fantasy</string>
+        <key>Kind</key><string>Protected AAC audio file</string>
+        <key>Size</key><integer>187400837</integer>
+        <key>Total Time</key><integer>23569644</integer>
+        <key>Disc Number</key><integer>1</integer>
+        <key>Disc Count</key><integer>1</integer>
+        <key>Track Number</key><integer>1</integer>
+        <key>Track Count</key><integer>2</integer>
+        <key>Date Modified</key><date>2012-11-07T07:55:35Z</date>
+        <key>Date Added</key><date>2012-11-07T07:54:11Z</date>
+        <key>Bit Rate</key><integer>64</integer>
+        <key>Sample Rate</key><integer>22050</integer>
+        <key>Play Count</key><integer>1</integer>
+        <key>Play Date</key><integer>3435729106</integer>
+        <key>Play Date UTC</key><date>2012-11-14T09:11:46Z</date>
+        <key>Artwork Count</key><integer>1</integer>
+        <key>Persistent ID</key><string>5BF51A580DB9EB16</string>
+        <key>Track Type</key><string>File</string>
+        <key>Protected</key><true/>
+        <key>Purchased</key><true/>
+        <key>Location</key><string>file:///audiobook.m4b</string>
+        <key>File Folder Count</key><integer>4</integer>
+        <key>Library Folder Count</key><integer>1</integer>
+    </dict>
+    
+    "Audiobook podcast files" should "allow access to correct fields" in {
+        val audiobook = new Audiobook(new Dict(audioBookXML))
+
+        audiobook.isPurchased should be (true)
+        audiobook.isProtected should be (true)
+
+        audiobook.discNumber.isDefined should be (true)
+        audiobook.discNumber.get should be (1)
+
+        audiobook.discCount.isDefined should be (true)
+        audiobook.discCount.get should be (1)
+
+        audiobook.trackNumber.isDefined should be (true)
+        audiobook.trackNumber.get should be (1)
+
+        audiobook.trackCount.isDefined should be (true)
+        audiobook.trackCount.get should be (2)
+        
+    }
+
+    val tvShowXML = 
+    <dict>
+        <key>Track ID</key><integer>10471</integer>
+        <key>Name</key><string>Who Would Win / Lady &#38; Peebles</string>
+        <key>Artist</key><string>Adventure Time</string>
+        <key>Album Artist</key><string>Adventure Time</string>
+        <key>Album</key><string>Adventure Time</string>
+        <key>Genre</key><string>Kids</string>
+        <key>Kind</key><string>Protected MPEG-4 video file</string>
+        <key>Size</key><integer>221310914</integer>
+        <key>Total Time</key><integer>1286920</integer>
+        <key>Disc Number</key><integer>1</integer>
+        <key>Disc Count</key><integer>1</integer>
+        <key>Track Number</key><integer>6</integer>
+        <key>Year</key><integer>2012</integer>
+        <key>Date Modified</key><date>2014-09-28T13:36:03Z</date>
+        <key>Date Added</key><date>2014-09-28T13:26:37Z</date>
+        <key>Bit Rate</key><integer>121</integer>
+        <key>Release Date</key><date>2012-11-05T08:00:00Z</date>
+        <key>Artwork Count</key><integer>1</integer>
+        <key>Series</key><string>Adventure Time</string>
+        <key>Episode</key><string>49</string>
+        <key>Episode Order</key><integer>6</integer>
+        <key>Sort Album</key><string>Adventure Time, Vol. 5</string>
+        <key>Persistent ID</key><string>0C0444F9A181FA4E</string>
+        <key>Track Type</key><string>File</string>
+        <key>Protected</key><true/>
+        <key>Purchased</key><true/>
+        <key>Has Video</key><true/>
+        <key>HD</key><false/>
+        <key>Video Width</key><integer>640</integer>
+        <key>Video Height</key><integer>478</integer>
+        <key>TV Show</key><true/>
+        <key>Location</key><string>file:///tv_show.m4v</string>
+        <key>File Folder Count</key><integer>4</integer>
+        <key>Library Folder Count</key><integer>1</integer>
+    </dict>
+
+    "TV Show files" should "allow access to correct fields" in {
+        val tvShow = new TVShow(new Dict(tvShowXML))
+        
+        tvShow.hasVideo should be (true)
+        tvShow.isHD should be (false)
+
+        tvShow.episode should be ("49")
+        tvShow.episodeOrder should be (6)
+        tvShow.series should be ("Adventure Time")
+        tvShow.season.isDefined should be (false)
+
+        tvShow.videoWidth should be (640)
+        tvShow.videoHeight should be (478)
+    }
+
      val audioPodcastXML = 
      <dict>
         <key>Name</key><string>#233 - Joey Diaz, Dean Delray and Lee Syatt</string>
@@ -152,59 +253,6 @@ class PodcastFileTest extends FlatSpec with Matchers {
           videoPodcast.artworkCount should be (1)
           videoPodcast.isExplicit should be (false)
      }
-}
 
-    
-class AudiobookFileTest extends FlatSpec with Matchers {
 
-    val audioBookXML = 
-    <dict>
-        <key>Name</key><string>Mogworld (Unabridged) Part 1</string>
-        <key>Artist</key><string>Yahtzee Croshaw</string>
-        <key>Album Artist</key><string>Yahtzee Croshaw</string>
-        <key>Album</key><string>Mogworld (Unabridged)</string>
-        <key>Genre</key><string>Sci Fi &#38; Fantasy</string>
-        <key>Kind</key><string>Protected AAC audio file</string>
-        <key>Size</key><integer>187400837</integer>
-        <key>Total Time</key><integer>23569644</integer>
-        <key>Disc Number</key><integer>1</integer>
-        <key>Disc Count</key><integer>1</integer>
-        <key>Track Number</key><integer>1</integer>
-        <key>Track Count</key><integer>2</integer>
-        <key>Date Modified</key><date>2012-11-07T07:55:35Z</date>
-        <key>Date Added</key><date>2012-11-07T07:54:11Z</date>
-        <key>Bit Rate</key><integer>64</integer>
-        <key>Sample Rate</key><integer>22050</integer>
-        <key>Play Count</key><integer>1</integer>
-        <key>Play Date</key><integer>3435729106</integer>
-        <key>Play Date UTC</key><date>2012-11-14T09:11:46Z</date>
-        <key>Artwork Count</key><integer>1</integer>
-        <key>Persistent ID</key><string>5BF51A580DB9EB16</string>
-        <key>Track Type</key><string>File</string>
-        <key>Protected</key><true/>
-        <key>Purchased</key><true/>
-        <key>Location</key><string>file:///audiobook.m4b</string>
-        <key>File Folder Count</key><integer>4</integer>
-        <key>Library Folder Count</key><integer>1</integer>
-    </dict>
-    
-    "Audiobook podcast files" should "allow access to correct fields" in {
-        val audiobook = new Audiobook(new Dict(audioBookXML))
-
-        audiobook.isPurchased should be (true)
-        audiobook.isProtected should be (true)
-
-        audiobook.discNumber.isDefined should be (true)
-        audiobook.discNumber.get should be (1)
-
-        audiobook.discCount.isDefined should be (true)
-        audiobook.discCount.get should be (1)
-
-        audiobook.trackNumber.isDefined should be (true)
-        audiobook.trackNumber.get should be (1)
-
-        audiobook.trackCount.isDefined should be (true)
-        audiobook.trackCount.get should be (2)
-        
-    }
 }

@@ -83,6 +83,7 @@ case class TVShow(dict:Dict) extends Track(dict)
                                with MayHaveTrackInfo {
      def series:String = root.getString("Series").get
      def episode:String = root.getString("Episode").get
+     def episodeOrder:Int = root.getInt("Episode Order").get
      def season:Option[Int] = root.getInt("Season")
 }
 
