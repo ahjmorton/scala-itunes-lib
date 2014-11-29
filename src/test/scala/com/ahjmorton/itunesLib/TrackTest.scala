@@ -153,3 +153,58 @@ class PodcastFileTest extends FlatSpec with Matchers {
           videoPodcast.isExplicit should be (false)
      }
 }
+
+    
+class AudiobookFileTest extends FlatSpec with Matchers {
+
+    val audioBookXML = 
+    <dict>
+        <key>Name</key><string>Mogworld (Unabridged) Part 1</string>
+        <key>Artist</key><string>Yahtzee Croshaw</string>
+        <key>Album Artist</key><string>Yahtzee Croshaw</string>
+        <key>Album</key><string>Mogworld (Unabridged)</string>
+        <key>Genre</key><string>Sci Fi &#38; Fantasy</string>
+        <key>Kind</key><string>Protected AAC audio file</string>
+        <key>Size</key><integer>187400837</integer>
+        <key>Total Time</key><integer>23569644</integer>
+        <key>Disc Number</key><integer>1</integer>
+        <key>Disc Count</key><integer>1</integer>
+        <key>Track Number</key><integer>1</integer>
+        <key>Track Count</key><integer>2</integer>
+        <key>Date Modified</key><date>2012-11-07T07:55:35Z</date>
+        <key>Date Added</key><date>2012-11-07T07:54:11Z</date>
+        <key>Bit Rate</key><integer>64</integer>
+        <key>Sample Rate</key><integer>22050</integer>
+        <key>Play Count</key><integer>1</integer>
+        <key>Play Date</key><integer>3435729106</integer>
+        <key>Play Date UTC</key><date>2012-11-14T09:11:46Z</date>
+        <key>Artwork Count</key><integer>1</integer>
+        <key>Persistent ID</key><string>5BF51A580DB9EB16</string>
+        <key>Track Type</key><string>File</string>
+        <key>Protected</key><true/>
+        <key>Purchased</key><true/>
+        <key>Location</key><string>file:///audiobook.m4b</string>
+        <key>File Folder Count</key><integer>4</integer>
+        <key>Library Folder Count</key><integer>1</integer>
+    </dict>
+    
+    "Audiobook podcast files" should "allow access to correct fields" in {
+        val audiobook = new Audiobook(new Dict(audioBookXML))
+
+        audiobook.isPurchased should be (true)
+        audiobook.isProtected should be (true)
+
+        audiobook.discNumber.isDefined should be (true)
+        audiobook.discNumber.get should be (1)
+
+        audiobook.discCount.isDefined should be (true)
+        audiobook.discCount.get should be (1)
+
+        audiobook.trackNumber.isDefined should be (true)
+        audiobook.trackNumber.get should be (1)
+
+        audiobook.trackCount.isDefined should be (true)
+        audiobook.trackCount.get should be (2)
+        
+    }
+}

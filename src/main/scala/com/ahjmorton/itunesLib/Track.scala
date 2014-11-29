@@ -55,8 +55,8 @@ trait VideoLike extends DictTrack {
 }
 
 trait MayHaveTrackInfo extends DictTrack {
-     def diskNumber:Option[Int] = root.getInt("Disk Number")
-     def diskCount:Option[Int] = root.getInt("Disk Count")
+     def discNumber:Option[Int] = root.getInt("Disc Number")
+     def discCount:Option[Int] = root.getInt("Disc Count")
      def trackNumber:Option[Int] = root.getInt("Track Number")
      def trackCount:Option[Int] = root.getInt("Track Count")
 }
