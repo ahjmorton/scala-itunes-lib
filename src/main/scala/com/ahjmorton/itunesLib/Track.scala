@@ -90,7 +90,9 @@ case class TVShow(dict:Dict) extends Track(dict)
 case class Movie(dict:Dict) extends Track(dict)
                                with AudioLike
                                with VideoLike
-                               with MayHaveTrackInfo
+                               with MayHaveTrackInfo {
+     def contentRating:Option[String] = root.getString("Content Rating")
+}
 
 case class ITunesU(dict:Dict) extends Track(dict)
                                with AudioLike

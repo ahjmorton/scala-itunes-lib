@@ -8,7 +8,6 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
       val musicXML = 
           <dict>
-              <key>Track ID</key><integer>1</integer>
               <key>Name</key><string>Never Give Up</string>
               <key>Artist</key><string>Error404</string>
               <key>Album</key><string>Beta EP</string>
@@ -119,7 +118,6 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
     val tvShowXML = 
     <dict>
-        <key>Track ID</key><integer>10471</integer>
         <key>Name</key><string>Who Would Win / Lady &#38; Peebles</string>
         <key>Artist</key><string>Adventure Time</string>
         <key>Album Artist</key><string>Adventure Time</string>
@@ -216,7 +214,6 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
      val videoPodcastXML =
      <dict>
-        <key>Track ID</key><integer>7209</integer>
         <key>Name</key><string>Episode 38 - Beatnik</string>
         <key>Album</key><string>Tiki Bar TV</string>
         <key>Genre</key><string>Podcast</string>
@@ -254,5 +251,49 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
           videoPodcast.isExplicit should be (false)
      }
 
+     val movieXML =
+     <dict>
+        <key>Name</key><string>The Godfather: The Coppola Restoration</string>
+        <key>Artist</key><string>Francis Ford Coppola</string>
+        <key>Genre</key><string>Drama</string>
+        <key>Kind</key><string>Protected MPEG-4 video file</string>
+        <key>Size</key><integer>6083053810</integer>
+        <key>Total Time</key><integer>10624927</integer>
+        <key>Year</key><integer>2008</integer>
+        <key>Date Modified</key><date>2014-06-22T21:23:44Z</date>
+        <key>Date Added</key><date>2014-06-22T20:59:32Z</date>
+        <key>Bit Rate</key><integer>110</integer>
+        <key>Play Count</key><integer>1</integer>
+        <key>Play Date</key><integer>3487527962</integer>
+        <key>Play Date UTC</key><date>2014-07-06T21:46:02Z</date>
+        <key>Release Date</key><date>2008-10-27T07:00:00Z</date>
+        <key>Artwork Count</key><integer>1</integer>
+        <key>Sort Name</key><string>Godfather: The Coppola Restoration</string>
+        <key>Persistent ID</key><string>80C9075E5FD06C11</string>
+        <key>Content Rating</key><string>uk-movie|18|400|</string>
+        <key>Track Type</key><string>File</string>
+        <key>Protected</key><true/>
+        <key>Purchased</key><true/>
+        <key>Has Video</key><true/>
+        <key>HD</key><true/>
+        <key>Video Width</key><integer>1280</integer>
+        <key>Video Height</key><integer>720</integer>
+        <key>Movie</key><true/>
+        <key>Location</key><string>file:///movie.m4v</string>
+        <key>File Folder Count</key><integer>4</integer>
+        <key>Library Folder Count</key><integer>1</integer>
+     </dict>
 
+     "Movie files" should "allow access to correct fields" in {
+          val movie = new Movie(new Dict(movieXML))
+          movie.hasVideo should be (true)
+          movie.isHD should be (true)
+          movie.videoWidth should be (1280)
+          movie.videoHeight should be (720)
+
+          movie.artworkCount should be (1)
+
+          movie.contentRating.isDefined should be (true)
+          movie.contentRating.get should be ("uk-movie|18|400|")
+     }
 }
