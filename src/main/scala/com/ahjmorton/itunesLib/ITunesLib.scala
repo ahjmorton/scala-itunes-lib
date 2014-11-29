@@ -40,7 +40,7 @@ object ITunesLib {
         def tvShows = playlistDicts("TV Shows").map(new TVShow(_))
         def movies = playlistDicts("Movies").map(new Movie(_))
         def audioBooks = playlistDicts("Audiobooks").map(new Audiobook(_))
-        def itunesU = playlistDicts("iTunes U").map(new ITunesU(_))
+        def itunesU = playlistDicts("iTunes U").map(new ITunesU(_))
 
         private val tracks = root.getDict("Tracks").get
         private val playlists = root.getArrayOfDicts("Playlists").get
