@@ -11,11 +11,7 @@ class Dict(xml:Node) {
     }.toMap
 
     private def findAndConvert[T](key:String, conv:(Node => T)) : Option[T] = {
-        if(index contains key) {
-            Some(conv(index(key)))        
-        } else {
-            None
-        }
+         index.get(key).map(conv)
     }
 
     def getString = findAndConvert(_:String, (node) => node.text)

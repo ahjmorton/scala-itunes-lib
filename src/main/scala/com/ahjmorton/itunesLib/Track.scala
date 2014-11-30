@@ -8,10 +8,18 @@ trait DictTrack {
 
 trait TrackLike extends DictTrack{
 
-     def name:String = root.getString("Name").get
-     def location:String = root.getString("Location").get
-     def trackType:String = root.getString("Track Type").get
-     def dateAdded:DateTime = root.getDateTime("Date Added").get
+     private def getOrFail[T](key:String, op:Option[T]):T = {
+          op.getOrElse(throw new IllegalStateException("Expected value [" + key + "]+ to be present but not."))
+     }
+
+     protected def getStringOrFail(key:String) = getOrFail(key, root.getString(key))
+     protected def getDateTimeOrFail(key:String) = getOrFail(key, root.getDateTime(key))
+     protected def getIntOrFail(key:String) = getOrFail(key, root.getInt(key))
+
+     def name:String = getStringOrFail("Name")
+     def location:String = getStringOrFail("Location")
+     def trackType:String = getStringOrFail("Track Type")
+     def dateAdded:DateTime = getDateTimeOrFail("Date Added")
      def dateModified:DateTime = root.getDateTime("Date Modified").getOrElse(dateAdded)
 
      def playCount:Int = root.getInt("Play Count").getOrElse(0)
@@ -81,9 +89,9 @@ case class TVShow(dict:Dict) extends Track(dict)
                                with AudioLike
                                with VideoLike
                                with MayHaveTrackInfo {
-     def series:String = root.getString("Series").get
-     def episode:String = root.getString("Episode").get
-     def episodeOrder:Int = root.getInt("Episode Order").get
+     def series:String = getStringOrFail("Series")
+     def episode:String = getStringOrFail("Episode")
+     def episodeOrder:Int = getIntOrFail("Episode Order")
      def season:Option[Int] = root.getInt("Season")
 }
 

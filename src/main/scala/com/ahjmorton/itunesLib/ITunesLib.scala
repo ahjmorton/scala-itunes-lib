@@ -42,26 +42,43 @@ object ITunesLib {
         def audioBooks = playlistDicts("Audiobooks").map(new Audiobook(_))
         def itunesU = playlistDicts("iTunes U").map(new ITunesU(_))
 
-        private val tracks = root.getDict("Tracks").get
-        private val playlists = root.getArrayOfDicts("Playlists").get
+        private val tracks = root.getDict("Tracks").getOrElse(
+          throw new IllegalArgumentException("Tracks element is missing from iTunesXML")
+        )
+
+        private val playlists = root.getArrayOfDicts("Playlists").getOrElse(
+          throw new IllegalArgumentException("Playlists element is missing from iTunesXML")
+        )
 
         private def playlistDicts(name:String) = {
-             playlist(name).map((trackId) => tracks.getDict(trackId) match {
-                 case Some(dict) => dict
-                 case None => throw new IllegalStateException("Track ID " + trackId + " specified in playlist but cannot find in list of tracks")
-             })
+             playlist(name)
+               .map((trackId) => tracks.getDict(trackId).getOrElse(
+                   throw new IllegalStateException("Track ID " + trackId + " specified in playlist but cannot find in list of tracks")
+               ))
         }
 
         private def playlist(name:String):Iterable[String] = {
-            val playlist = 
-              playlists.find((dict:Dict) => dict.getString("Name").get == name) match {
-                case Some(playlist) => playlist 
-                case None => throw new IllegalArgumentException("Cannot find playlist with name " + name)
-              }
-            playlist.getArrayOfDicts("Playlist Items").get
-              .map(_.getInt("Track ID").get.toString)
+            val playlistOption = playlists.find((dict:Dict) =>
+               dict.getString("Name").getOrElse(
+                 throw new IllegalStateException("Playlist [" + name + "] has no Name element")
+               ) == name
+            )
+
+            val playlist = playlistOption.getOrElse(
+              throw new IllegalArgumentException("Cannot find playlist with name [ " + name + "]")
+            )
+
+            val playlistItems = playlist.getArrayOfDicts("Playlist Items").getOrElse(
+              throw new IllegalStateException("Playlist [" + name + "] does not have a Playlist Items element")
+            )
+
+            playlistItems.map((playlistItemDict) => 
+               playlistItemDict.getInt("Track ID").getOrElse(
+                  throw new IllegalStateException(
+                    "Track id missing in playlist item for playlist [" + name + "]: " + playlistItemDict
+                  )
+               ).toString
+            )
         }
-
     }
-
 }
