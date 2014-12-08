@@ -1,6 +1,8 @@
 lazy val root = (project in file (".")).
    settings(
-       name := "scala-itunes-lib",
+       name := "itunesLib",
+       organization := "com.ahjmorton",
+       version := "0.0.1-SNAPSHOT",
        libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "1.6.0",
        libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
    )
