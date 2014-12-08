@@ -69,7 +69,7 @@ trait MayHaveTrackInfo extends DictTrack {
      def trackCount:Option[Int] = root.getInt("Track Count")
 }
 
-abstract class Track(dict:Dict) extends TrackLike {
+sealed abstract class Track(dict:Dict) extends TrackLike {
      protected override val root = dict
 }
 
