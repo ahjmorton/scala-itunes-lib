@@ -9,7 +9,7 @@ trait DictTrack {
 trait TrackLike extends DictTrack{
 
      private def getOrFail[T](key:String, op:Option[T]):T = {
-          op.getOrElse(throw new IllegalStateException("Expected value [" + key + "]+ to be present but not."))
+          op.getOrElse(throw new IllegalStateException("Expected value [" + key + "] to be present but not"))
      }
 
      protected def getStringOrFail(key:String) = getOrFail(key, root.getString(key))
