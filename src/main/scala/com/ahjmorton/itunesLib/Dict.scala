@@ -10,22 +10,22 @@ class Dict(xml:Node) {
         case Seq(keyNode, elementNode) => (keyNode.text, elementNode)
     }.toMap
 
-    private def findAndConvert[T](key:String, conv:(Node => T)) : Option[T] = {
+    private def findAndConvert[T](key:String, 
+                                  conv:(Node => T)) : Option[T] = 
          index.get(key).map(conv)
-    }
 
-    def getString = findAndConvert(_:String, (node) => node.text)
+    def getString = findAndConvert(_:String, node => node.text)
 
-    def getInt = findAndConvert(_:String, (node) => node.text.toInt)
+    def getInt = findAndConvert(_:String, node => node.text.toInt)
 
-    def getBoolean = findAndConvert(_:String, (node) => node.label == "true")
+    def getBoolean = findAndConvert(_:String, node => node.label == "true")
 
-    def getDict = findAndConvert(_:String, (node) => new Dict(node)) 
+    def getDict = findAndConvert(_:String, node => new Dict(node)) 
 
-    def getDateTime = findAndConvert(_:String, (node) => DateTime.parse(node.text))
+    def getDateTime = findAndConvert(_:String, node => DateTime.parse(node.text))
 
     def getArrayOfDicts = findAndConvert(_:String, 
-         (node) => {
+         node => {
              (node \ "_").map(new Dict(_))
          }
     )
