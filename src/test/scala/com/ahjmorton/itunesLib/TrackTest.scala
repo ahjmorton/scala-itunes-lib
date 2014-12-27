@@ -8,6 +8,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
       val musicXML = 
           <dict>
+              <key>Track ID</key><integer>1</integer>
               <key>Name</key><string>Never Give Up</string>
               <key>Artist</key><string>Error404</string>
               <key>Album</key><string>Beta EP</string>
@@ -36,6 +37,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
       "Music files" should "allow access to correct fields" in {
           val music = new Music(new Dict(musicXML))
+          music.trackId should be (1)
           music.name should be ("Never Give Up")
           music.artist should be ("Error404")
           music.album should be ("Beta EP")
@@ -67,6 +69,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
     val audioBookXML = 
     <dict>
+        <key>Track ID</key><integer>2</integer>
         <key>Name</key><string>Mogworld (Unabridged) Part 1</string>
         <key>Artist</key><string>Yahtzee Croshaw</string>
         <key>Album Artist</key><string>Yahtzee Croshaw</string>
@@ -99,6 +102,8 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
     "Audiobook podcast files" should "allow access to correct fields" in {
         val audiobook = new Audiobook(new Dict(audioBookXML))
 
+        audiobook.trackId should be (2)
+
         audiobook.isPurchased should be (true)
         audiobook.isProtected should be (true)
 
@@ -118,6 +123,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
     val tvShowXML = 
     <dict>
+        <key>Track ID</key><integer>3</integer>
         <key>Name</key><string>Who Would Win / Lady &#38; Peebles</string>
         <key>Artist</key><string>Adventure Time</string>
         <key>Album Artist</key><string>Adventure Time</string>
@@ -156,6 +162,8 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
     "TV Show files" should "allow access to correct fields" in {
         val tvShow = new TVShow(new Dict(tvShowXML))
         
+        tvShow.trackId should be (3)
+
         tvShow.hasVideo should be (true)
         tvShow.isHD should be (false)
 
@@ -170,7 +178,8 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
      val audioPodcastXML = 
      <dict>
-        <key>Name</key><string>#233 - Joey Diaz, Dean Delray and Lee Syatt</string>
+        <key>Track ID</key><integer>4</integer>
+        <key>Name</key><string>#233 4 Joey Diaz, Dean Delray and Lee Syatt</string>
         <key>Artist</key><string>Joey Diaz</string>
         <key>Composer</key><string>The Church Of What's Happening Now</string>
         <key>Album</key><string>The Church of What's Happening Now: With Joey Coco Diaz</string>
@@ -198,6 +207,9 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
      "Audio podcast files" should "allow access to correct fields" in {
           val audioPodcast = new Podcast(new Dict(audioPodcastXML))
+
+          audioPodcast.trackId should be (4)
+
           audioPodcast.hasVideo should be (false)
 
           audioPodcast.totalTime.isDefined should be (true)
@@ -214,6 +226,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
      val videoPodcastXML =
      <dict>
+        <key>Track ID</key><integer>5</integer>
         <key>Name</key><string>Episode 38 - Beatnik</string>
         <key>Album</key><string>Tiki Bar TV</string>
         <key>Genre</key><string>Podcast</string>
@@ -242,6 +255,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
      "Video podcast files" should "allow access to correct fields" in {
           val videoPodcast = new Podcast(new Dict(videoPodcastXML))
+          videoPodcast.trackId should be (5)
           videoPodcast.hasVideo should be (true)
           videoPodcast.isHD should be (false)
           videoPodcast.videoWidth should be (640)
@@ -253,6 +267,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
      val movieXML =
      <dict>
+        <key>Track ID</key><integer>6</integer>
         <key>Name</key><string>The Godfather: The Coppola Restoration</string>
         <key>Artist</key><string>Francis Ford Coppola</string>
         <key>Genre</key><string>Drama</string>
@@ -286,6 +301,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
      "Movie files" should "allow access to correct fields" in {
           val movie = new Movie(new Dict(movieXML))
+          movie.trackId should be (6)
           movie.hasVideo should be (true)
           movie.isHD should be (true)
           movie.videoWidth should be (1280)

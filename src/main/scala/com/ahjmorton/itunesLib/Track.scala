@@ -16,6 +16,7 @@ trait TrackLike extends DictTrack{
      protected def getDateTimeOrFail(key:String) = getOrFail(key, root.getDateTime(key))
      protected def getIntOrFail(key:String) = getOrFail(key, root.getInt(key))
 
+     def trackId:Int = getIntOrFail("Track ID")
      def name:String = getStringOrFail("Name")
      def location:String = getStringOrFail("Location")
      def trackType:String = getStringOrFail("Track Type")
