@@ -5,6 +5,15 @@ import scala.xml.Node
 import scala.xml.Elem
 import scala.xml.Utility
 
+trait ITunesLib {
+    def music:Iterable[Music]
+    def podcasts:Iterable[Podcast]
+    def tvShows:Iterable[TVShow]
+    def movies:Iterable[Movie]
+    def audioBooks:Iterable[Audiobook]
+    def itunesU:Iterable[ITunesU]
+}
+
 object ITunesLib {
 
     def fromFile(path:String):ITunesLib = newLib(XML.loadFile(path))
@@ -24,14 +33,7 @@ object ITunesLib {
         }
     }
 
-    trait ITunesLib {
-        def music:Iterable[Music]
-        def podcasts:Iterable[Podcast]
-        def tvShows:Iterable[TVShow]
-        def movies:Iterable[Movie]
-        def audioBooks:Iterable[Audiobook]
-        def itunesU:Iterable[ITunesU]
-    }
+
 
     private class DictITunesLib(root:Dict) extends ITunesLib {
      
