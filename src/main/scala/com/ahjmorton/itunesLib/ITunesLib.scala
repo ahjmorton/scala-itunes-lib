@@ -37,12 +37,12 @@ object ITunesLib {
 
     private class DictITunesLib(root:Dict) extends ITunesLib {
      
-        def music = playlistDicts("Music").map(Music)
-        def podcasts = playlistDicts("Podcasts").map(Podcast)
-        def tvShows = playlistDicts("TV Shows").map(TVShow)
-        def movies = playlistDicts("Movies").map(Movie)
-        def audioBooks = playlistDicts("Audiobooks").map(Audiobook)
-        def itunesU = playlistDicts("iTunes U").map(ITunesU)
+        def music = playlistDicts("Music").map(new Music(_))
+        def podcasts = playlistDicts("Podcasts").map(new Podcast(_))
+        def tvShows = playlistDicts("TV Shows").map(new TVShow(_))
+        def movies = playlistDicts("Movies").map(new Movie(_))
+        def audioBooks = playlistDicts("Audiobooks").map(new Audiobook(_))
+        def itunesU = playlistDicts("iTunes U").map(new ITunesU(_))
 
         private val tracks = root.getDict("Tracks").getOrElse(
           throw new IllegalArgumentException("Tracks element is missing from iTunesXML")

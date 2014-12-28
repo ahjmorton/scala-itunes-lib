@@ -74,19 +74,19 @@ sealed abstract class Track(dict:Dict) extends TrackLike {
      protected override val root = dict
 }
 
-case class Music(dict:Dict) extends Track(dict)
+class Music(dict:Dict) extends Track(dict)
                                with AudioLike
                                with MayHaveTrackInfo
 
-case class Podcast(dict:Dict) extends Track(dict)
+class Podcast(dict:Dict) extends Track(dict)
                                with AudioLike
                                with VideoLike
 
-case class Audiobook(dict:Dict) extends Track(dict)
+class Audiobook(dict:Dict) extends Track(dict)
                                with AudioLike
                                with MayHaveTrackInfo
 
-case class TVShow(dict:Dict) extends Track(dict)
+class TVShow(dict:Dict) extends Track(dict)
                                with AudioLike
                                with VideoLike
                                with MayHaveTrackInfo {
@@ -96,13 +96,13 @@ case class TVShow(dict:Dict) extends Track(dict)
      def season:Option[Int] = root.getInt("Season")
 }
 
-case class Movie(dict:Dict) extends Track(dict)
+class Movie(dict:Dict) extends Track(dict)
                                with AudioLike
                                with VideoLike
                                with MayHaveTrackInfo {
      def contentRating:Option[String] = root.getString("Content Rating")
 }
 
-case class ITunesU(dict:Dict) extends Track(dict)
+class ITunesU(dict:Dict) extends Track(dict)
                                with AudioLike
                                with VideoLike
