@@ -35,7 +35,7 @@ trait TrackLike extends DictTrack{
      def isUnplayed:Boolean = boolDefaultFalse("Unplayed")
 
      def releaseDate:Option[DateTime] = root.getDateTime("Release Date")
-     def size:Option[Int] = root.getInt("Size")
+     def size:Option[Long] = root.getLong("Size")
      def kind:Option[String] = root.getString("Kind")
      def totalTime:Option[Int] = root.getInt("Total Time")
      def year:Option[Int] = root.getInt("Year")

@@ -311,5 +311,7 @@ class TrackFileTypeTest extends FlatSpec with Matchers {
 
           movie.contentRating.isDefined should be (true)
           movie.contentRating.get should be ("uk-movie|18|400|")
+
+          movie.size.get should be (6083053810L)
      }
 }
