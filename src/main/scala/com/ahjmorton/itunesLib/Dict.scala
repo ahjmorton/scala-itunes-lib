@@ -18,6 +18,8 @@ class Dict(xml:Node) {
 
     def getInt = findAndConvert(_:String, node => node.text.toInt)
 
+    def getLong = findAndConvert(_:String, node => node.text.toLong)
+
     def getBoolean = findAndConvert(_:String, node => node.label == "true")
 
     def getDict = findAndConvert(_:String, node => new Dict(node)) 

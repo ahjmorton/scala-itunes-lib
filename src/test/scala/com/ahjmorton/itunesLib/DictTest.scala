@@ -18,6 +18,12 @@ class DictTest extends FlatSpec with Matchers {
          dict.getInt("Key").get should be (123)
      }
 
+     it should "be able to extract a long" in {
+         val xml = <dict><key>Key</key><integer>3235018016</integer></dict>
+         val dict = new Dict(xml)
+         dict.getLong("Key").get should be (3235018016L)
+     }
+
      it should "be able to extract a boolean" in {
          val xml = <dict><key>Key</key><true /></dict>
          val dict = new Dict(xml)
