@@ -75,7 +75,7 @@ object ITunesLib {
             )
 
             playlistItems.map((playlistItemDict) => 
-               playlistItemDict.getInt("Track ID").getOrElse(
+               playlistItemDict.getNumber("Track ID").getOrElse(
                   throw new IllegalStateException(
                     "Track id missing in playlist item for playlist [" + name + "]: " + playlistItemDict
                   )

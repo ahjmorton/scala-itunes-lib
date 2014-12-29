@@ -14,17 +14,17 @@ trait TrackLike extends DictTrack{
 
      protected def getStringOrFail(key:String) = getOrFail(key, root.getString(key))
      protected def getDateTimeOrFail(key:String) = getOrFail(key, root.getDateTime(key))
-     protected def getIntOrFail(key:String) = getOrFail(key, root.getInt(key))
+     protected def getNumberOrFail(key:String) = getOrFail(key, root.getNumber(key))
 
-     def trackId:Int = getIntOrFail("Track ID")
+     def trackId:Long = getNumberOrFail("Track ID")
      def name:String = getStringOrFail("Name")
      def location:String = getStringOrFail("Location")
      def trackType:String = getStringOrFail("Track Type")
      def dateAdded:DateTime = getDateTimeOrFail("Date Added")
      def dateModified:DateTime = root.getDateTime("Date Modified").getOrElse(dateAdded)
 
-     def playCount:Int = root.getInt("Play Count").getOrElse(0)
-     def skipCount:Int = root.getInt("Skip Count").getOrElse(0)
+     def playCount:Long = root.getNumber("Play Count").getOrElse(0)
+     def skipCount:Long = root.getNumber("Skip Count").getOrElse(0)
 
      def isLocal:Boolean = trackType == "File"
 
@@ -35,10 +35,10 @@ trait TrackLike extends DictTrack{
      def isUnplayed:Boolean = boolDefaultFalse("Unplayed")
 
      def releaseDate:Option[DateTime] = root.getDateTime("Release Date")
-     def size:Option[Long] = root.getLong("Size")
+     def size:Option[Long] = root.getNumber("Size")
      def kind:Option[String] = root.getString("Kind")
-     def totalTime:Option[Int] = root.getInt("Total Time")
-     def year:Option[Int] = root.getInt("Year")
+     def totalTime:Option[Long] = root.getNumber("Total Time")
+     def year:Option[Long] = root.getNumber("Year")
 }
 
 trait AudioLike extends DictTrack {
@@ -51,23 +51,23 @@ trait AudioLike extends DictTrack {
      def albumArtist:String = stringOrEmpty("Album Artist")
      def genre:String = stringOrEmpty("Genre")
 
-     def sampleRate:Int = root.getInt("Sample Rate").getOrElse(0)
-     def bitRate:Int = root.getInt("Bit Rate").getOrElse(0)
-     def artworkCount:Int = root.getInt("Artwork Count").getOrElse(0)
+     def sampleRate:Long = root.getNumber("Sample Rate").getOrElse(0)
+     def bitRate:Long = root.getNumber("Bit Rate").getOrElse(0)
+     def artworkCount:Long = root.getNumber("Artwork Count").getOrElse(0)
 }
 
 trait VideoLike extends DictTrack {
      def hasVideo:Boolean = root.getBoolean("Has Video").getOrElse(false)
      def isHD:Boolean = root.getBoolean("HD").getOrElse(false)
-     def videoHeight:Int = root.getInt("Video Height").getOrElse(0)
-     def videoWidth:Int = root.getInt("Video Width").getOrElse(0)
+     def videoHeight:Long = root.getNumber("Video Height").getOrElse(0)
+     def videoWidth:Long = root.getNumber("Video Width").getOrElse(0)
 }
 
 trait MayHaveTrackInfo extends DictTrack {
-     def discNumber:Option[Int] = root.getInt("Disc Number")
-     def discCount:Option[Int] = root.getInt("Disc Count")
-     def trackNumber:Option[Int] = root.getInt("Track Number")
-     def trackCount:Option[Int] = root.getInt("Track Count")
+     def discNumber:Option[Long] = root.getNumber("Disc Number")
+     def discCount:Option[Long] = root.getNumber("Disc Count")
+     def trackNumber:Option[Long] = root.getNumber("Track Number")
+     def trackCount:Option[Long] = root.getNumber("Track Count")
 }
 
 sealed abstract class Track(dict:Dict) extends TrackLike {
@@ -92,8 +92,8 @@ class TVShow(dict:Dict) extends Track(dict)
                                with MayHaveTrackInfo {
      def series:String = getStringOrFail("Series")
      def episode:String = getStringOrFail("Episode")
-     def episodeOrder:Int = getIntOrFail("Episode Order")
-     def season:Option[Int] = root.getInt("Season")
+     def episodeOrder:Long = getNumberOrFail("Episode Order")
+     def season:Option[Long] = root.getNumber("Season")
 }
 
 class Movie(dict:Dict) extends Track(dict)
