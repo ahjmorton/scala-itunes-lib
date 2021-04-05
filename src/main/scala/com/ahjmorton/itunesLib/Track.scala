@@ -1,6 +1,6 @@
 package com.ahjmorton.itunesLib
 
-import org.joda.time.DateTime
+import java.time.ZonedDateTime
 
 trait DictTrack {
      protected val root:Dict
@@ -20,8 +20,8 @@ trait TrackLike extends DictTrack{
      def name:String = getStringOrFail("Name")
      def location:String = getStringOrFail("Location")
      def trackType:String = getStringOrFail("Track Type")
-     def dateAdded:DateTime = getDateTimeOrFail("Date Added")
-     def dateModified:DateTime = root.getDateTime("Date Modified").getOrElse(dateAdded)
+     def dateAdded:ZonedDateTime = getDateTimeOrFail("Date Added")
+     def dateModified:ZonedDateTime = root.getDateTime("Date Modified").getOrElse(dateAdded)
 
      def playCount:Long = root.getNumber("Play Count").getOrElse(0)
      def skipCount:Long = root.getNumber("Skip Count").getOrElse(0)
@@ -34,7 +34,7 @@ trait TrackLike extends DictTrack{
      def isExplicit:Boolean = boolDefaultFalse("Explicit")
      def isUnplayed:Boolean = boolDefaultFalse("Unplayed")
 
-     def releaseDate:Option[DateTime] = root.getDateTime("Release Date")
+     def releaseDate:Option[ZonedDateTime] = root.getDateTime("Release Date")
      def size:Option[Long] = root.getNumber("Size")
      def kind:Option[String] = root.getString("Kind")
      def totalTime:Option[Long] = root.getNumber("Total Time")

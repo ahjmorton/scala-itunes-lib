@@ -1,6 +1,6 @@
 package com.ahjmorton.itunesLib
 
-import org.joda.time.DateTime
+import java.time.ZonedDateTime
 
 import org.scalatest._
 
@@ -25,7 +25,7 @@ class DictTest extends FlatSpec with Matchers {
      }
 
      it should "be able to extract a date" in {
-         val expectedDate = DateTime.parse("2014-08-27T01:00:00Z")
+         val expectedDate = ZonedDateTime.parse("2014-08-27T01:00:00Z")
          val xml = <dict><key>Key</key><date>2014-08-27T01:00:00Z</date></dict>
          val dict = new Dict(xml)
          dict.getDateTime("Key").get should be (expectedDate)

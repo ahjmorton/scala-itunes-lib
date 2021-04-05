@@ -3,7 +3,6 @@ package com.ahjmorton.itunesLib
 import scala.xml.XML
 import scala.io.Source
 
-
 import org.scalatest._
 
 class ITunesLibAcceptanceTest extends FeatureSpec with GivenWhenThen {

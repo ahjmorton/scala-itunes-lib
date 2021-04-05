@@ -1,7 +1,5 @@
 package com.ahjmorton.itunesLib
 
-import org.joda.time.DateTime
-
 import org.scalatest._
 
 class TrackFileTypeTest extends FlatSpec with Matchers {

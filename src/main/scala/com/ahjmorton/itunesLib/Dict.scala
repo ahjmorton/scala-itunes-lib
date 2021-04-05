@@ -1,8 +1,7 @@
 package com.ahjmorton.itunesLib
 
 import scala.xml.Node
-
-import org.joda.time.DateTime
+import java.time.ZonedDateTime
 
 class Dict(xml:Node) {
 
@@ -22,7 +21,7 @@ class Dict(xml:Node) {
 
     def getDict = findAndConvert(_:String, node => new Dict(node)) 
 
-    def getDateTime = findAndConvert(_:String, node => DateTime.parse(node.text))
+    def getDateTime = findAndConvert(_:String, node => ZonedDateTime.parse(node.text))
 
     def getArrayOfDicts = findAndConvert(_:String, 
          node => {
